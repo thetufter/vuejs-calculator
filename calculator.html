@@ -1,0 +1,111 @@
+<html>
+<head>
+    <title>Vue.js-based Calculator</title>
+    <link rel="stylesheet" type="text/css" href="calculator.css">
+</head>
+<body>
+    <div id="calculator">
+
+      <div class="calculator-logs">
+        <span v-for="log in logs">{{ log }}</span>
+      </div>
+
+      <input type="string" class="calculator-input" v-model="value" @keyup.enter="getResult()">
+
+      <div class="calculator-row">
+        <div class="calculator-col">
+          <button class="calculator-btn gray action" @click="clear()">C</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn gray action" @click="del()">del</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn gray action" @click="addExpresion('%')">%</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="addExpresion('/')">/</button>
+        </div>
+      </div>
+      <div class="calculator-row">
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(7)">7</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(8)">8</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(9)">9</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="addExpresion('*')">*</button>
+        </div>
+      </div>
+      <div class="calculator-row">
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(4)">4</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(5)">5</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(6)">6</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="addExpresion('-')">-</button>
+        </div>
+      </div>
+      <div class="calculator-row">
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(1)">1</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(2)">2</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="addExpresion(3)">3</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="addExpresion('+')">+</button>
+        </div>
+      </div>
+      <div class="calculator-row">
+        <div class="calculator-col wide">
+          <button class="calculator-btn" @click="addExpresion(0)">0</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn action" @click="addExpresion('.')">.</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="getResult()">=</button>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    new Vue({
+      el: '#calculator',
+      data: {
+        value: 0,
+        logs:  []
+      },
+      methods: {
+        addExpresion(e) {
+          if ( Number.isInteger(this.value) )
+            this.value = '';
+          this.value += e;
+        },
+        getResult() {
+          let log = `${this.value}`;
+          this.value = eval(this.value);
+          this.logs.push( log + `=${this.value}` );
+        },
+        clear() {
+          this.value = 0;
+        },
+        del() {
+          this.value = this.value.slice(0, -1);
+        }
+      }
+    })
+    </script>
+</body>
