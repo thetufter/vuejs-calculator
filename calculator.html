@@ -10,102 +10,99 @@
         <span v-for="log in logs">{{ log }}</span>
       </div>
 
-      <input type="string" class="calculator-input" v-model="value" @keyup.enter="getResult()">
+      <input type="string" class="calculator-input" v-model="value" @keyup.enter="doMath()">
 
       <div class="calculator-row">
-        <div class="calculator-col">
+        <div class="calculator-col wide">
           <button class="calculator-btn gray action" @click="clear()">C</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn gray action" @click="del()">del</button>
+          <button class="calculator-btn gray action" @click="del()">&#8592;</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn gray action" @click="addExpresion('%')">%</button>
-        </div>
-        <div class="calculator-col">
-          <button class="calculator-btn accent action" @click="addExpresion('/')">/</button>
+          <button class="calculator-btn accent action" @click="buttonPressed('/')">/</button>
         </div>
       </div>
       <div class="calculator-row">
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(7)">7</button>
+          <button class="calculator-btn" @click="buttonPressed(7)">7</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(8)">8</button>
+          <button class="calculator-btn" @click="buttonPressed(8)">8</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(9)">9</button>
+          <button class="calculator-btn" @click="buttonPressed(9)">9</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn accent action" @click="addExpresion('*')">*</button>
-        </div>
-      </div>
-      <div class="calculator-row">
-        <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(4)">4</button>
-        </div>
-        <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(5)">5</button>
-        </div>
-        <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(6)">6</button>
-        </div>
-        <div class="calculator-col">
-          <button class="calculator-btn accent action" @click="addExpresion('-')">-</button>
+          <button class="calculator-btn accent action" @click="buttonPressed('*')">*</button>
         </div>
       </div>
       <div class="calculator-row">
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(1)">1</button>
+          <button class="calculator-btn" @click="buttonPressed(4)">4</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(2)">2</button>
+          <button class="calculator-btn" @click="buttonPressed(5)">5</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn" @click="addExpresion(3)">3</button>
+          <button class="calculator-btn" @click="buttonPressed(6)">6</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn accent action" @click="addExpresion('+')">+</button>
+          <button class="calculator-btn accent action" @click="buttonPressed('-')">-</button>
+        </div>
+      </div>
+      <div class="calculator-row">
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="buttonPressed(1)">1</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="buttonPressed(2)">2</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn" @click="buttonPressed(3)">3</button>
+        </div>
+        <div class="calculator-col">
+          <button class="calculator-btn accent action" @click="buttonPressed('+')">+</button>
         </div>
       </div>
       <div class="calculator-row">
         <div class="calculator-col wide">
-          <button class="calculator-btn" @click="addExpresion(0)">0</button>
+          <button class="calculator-btn" @click="buttonPressed(0)">0</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn action" @click="addExpresion('.')">.</button>
+          <button class="calculator-btn action" @click="buttonPressed('.')">.</button>
         </div>
         <div class="calculator-col">
-          <button class="calculator-btn accent action" @click="getResult()">=</button>
+          <button class="calculator-btn accent action" @click="doMath()">=</button>
         </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
     new Vue({
-      el: '#calculator',
-      data: {
-        value: 0,
-        logs:  []
-      },
-      methods: {
-        addExpresion(e) {
-          if ( Number.isInteger(this.value) )
-            this.value = '';
-          this.value += e;
+        el: '#calculator',
+        data: {
+            value: 0,
+            logs:  []
         },
-        getResult() {
-          let log = `${this.value}`;
-          this.value = eval(this.value);
-          this.logs.push( log + `=${this.value}` );
-        },
-        clear() {
-          this.value = 0;
-        },
-        del() {
-          this.value = this.value.slice(0, -1);
+        methods: {
+            clear() {
+                this.value = 0;
+            },
+            del() {
+                this.value = this.value.slice(0, -1);
+            },
+            buttonPressed(e) {
+                if ( Number.isInteger(this.value) )
+                  this.value = '';
+                this.value += e;
+            },
+            doMath() {
+                let log = `${this.value}`;
+                this.value = eval(this.value);
+                this.logs.push( log + `=${this.value}` );
+            }
         }
-      }
     })
     </script>
 </body>
